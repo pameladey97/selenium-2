@@ -3,6 +3,9 @@ import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+
+
 //import org.openqa.selenium.edge.EdgeDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -34,6 +37,8 @@ public class Selenium {
 		System.out.println(driver.findElement(By.cssSelector("p.error")).getText());
 		
 		driver.findElement(By.linkText("Forgot your password?")).click();
+		
+		
 		Thread.sleep(1000);
 		driver.findElement(By.cssSelector("input[placeholder='Name']")).sendKeys("Pamela");
 		
@@ -45,17 +50,23 @@ public class Selenium {
 		
 		driver.findElement(By.cssSelector(".reset-pwd-btn")).click();
 		
-		System.out.println(driver.findElement(By.cssSelector("form p")).getText());
-		
+		String password = driver.findElement(By.cssSelector("form p")).getText();
+		//System.out.println(password);
+		//password = password.split(" ")[4]; // splitting on the basis of space and taking index 4 where your password will be available
+		//System.out.println(password);
+		//password = password.replace("'", "");//replace' with void
+		String PASSWORD = password.split(" ")[4].replace("'", "");
+		System.out.println(PASSWORD);
 		driver.findElement(By.xpath("//div[@class='forgot-pwd-btn-conainer']/button[1]")).click();
 		
 		
 		Thread.sleep(1000);
+		String name="Pamela";
 		driver.findElement(By.cssSelector("input#inputUsername")).sendKeys("SeleniumStudy");
 		driver.findElement(By.cssSelector("#inputUsername")).clear();
-		driver.findElement(By.cssSelector("input[id*='input']")).sendKeys("Pamela");
+		driver.findElement(By.cssSelector("input[id*='input']")).sendKeys(name);
 		
-		driver.findElement(By.xpath("//input[contains(@name,'input')]")).sendKeys("rahulshettyacademy");
+		driver.findElement(By.xpath("//input[contains(@name,'input')]")).sendKeys(PASSWORD);
 		
 		driver.findElement(By.xpath("//form/div/span/input[@id='chkboxOne']")).click();
 		
@@ -65,6 +76,12 @@ public class Selenium {
 		
 		
 		
+		
+		Thread.sleep(1000);
+		System.out.println(driver.findElement(By.tagName("p")).getText());
+		Assert.assertEquals(driver.findElement(By.tagName("p")).getText(),"You are successfully logged in." );
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@class='login-container']/h2")).getText(),"Hello "+ name+"," );
+		driver.findElement(By.className("logout-btn")).click();
 		
 		//Thread.sleep(3000);
 		//Close the url
